@@ -9,7 +9,7 @@ use Yii;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use frontend\components\AuthHandler;
-
+use yii\data\Pagination;
 
 class ArticlesController extends \yii\web\Controller
 {
@@ -59,9 +59,17 @@ class ArticlesController extends \yii\web\Controller
     }
 
     public function actionArticles(){
-        $articles= Articles::find()->all();
+        $query=Articles::find();
+        $count=$query->count();
+        $pagination= new Pagination([
+            'totalCount' =>$count,
+            'defaultPageSize'=>5
+        ]);
+        $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+    
         return $this->render('articles', [
-            'articles' => $articles ,
+             'articles' => $articles,
+             'pagination' => $pagination,
         ]);
     }
 

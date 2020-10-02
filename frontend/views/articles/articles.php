@@ -8,14 +8,21 @@
 </style>
 
 <main class="main_articles" >
-<?php
-    foreach ($articles as $key => $article):
-?>
-<?= \common\widgets\ArticleShow::widget(['article' => $article ])  ?>
-<?php
-endforeach;
-?>
-</main>
 
+
+<?php
+
+foreach ($articles as $key => $article):
+    ?>
+    <?= \common\widgets\ArticleShow::widget(['article' => $article ])  ?>
+    <?php
+    endforeach;
+    ?>
+
+    <?php   
+    echo \yii\widgets\LinkPager::widget([
+        'pagination'=>$pagination,
+    ]);
+    ?>
 
 
