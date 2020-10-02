@@ -3,7 +3,6 @@
     .main_articles{
         display: flex;
         flex-direction: column;
-
     }
 </style>
 
@@ -24,5 +23,7 @@ foreach ($articles as $key => $article):
         'pagination'=>$pagination,
     ]);
     ?>
+
+    <main>
 
 
