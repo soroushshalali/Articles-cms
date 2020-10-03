@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -34,7 +35,7 @@ class Articles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'text', 'short_text', 'author', 'author_id', 'created_at', 'updated_at'], 'required'],
+            [['title', 'text', 'short_text', 'author', 'author_id'], 'required'],
             [['text', 'short_text'], 'string'],
             [['author_id', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -60,6 +61,13 @@ class Articles extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * Gets query for [[Author0]].
      *
@@ -68,5 +76,45 @@ class Articles extends \yii\db\ActiveRecord
     public function getAuthor0()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    /**
+     * Gets query for [[Articles]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticles()
+    {
+        return $this->hasMany(Articles::className(), ['author_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Auths]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuths()
+    {
+        return $this->hasMany(Auth::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[AuthAssignments]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthAssignments()
+    {
+        return $this->hasMany(AuthAssignment::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[ItemNames]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemNames()
+    {
+        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'id']);
     }
 }

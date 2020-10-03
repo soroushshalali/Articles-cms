@@ -121,10 +121,10 @@ class ArticlesController extends \yii\web\Controller
     }
 
     public function actionInsert(){
-        // $user = User::findOne(Yii::$app->user->id);
+        $user = User::findOne(Yii::$app->user->id);
         $model=new Articles();
         $model->author_id=Yii::$app->user->id;
-        // $model->author=$user->username;
+        $model->author=$user->username;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
@@ -164,51 +164,6 @@ class ArticlesController extends \yii\web\Controller
         return $this->render('profile' , ['user' => $user]);
     }
 
-    // public function actionInit(){
-    //     $auth=Yii::$app->authManager;
-
-    //     $insert=$auth->createPermission('insert');
-    //     $auth->add($insert);
-
-    //     $delete=$auth->createPermission('delete');
-    //     $auth->add($delete);
-
-    //     $update=$auth->createPermission('update');
-    //     $auth->add($update);
-
-    //     $admin=$auth->createRole('admin');
-    //     $auth->add($admin);
-
-    //     $user=$auth->createRole('user');
-    //     $auth->add($user);
-
-    //     $auth->addChild($admin , $delete);
-    //     $auth->addChild($admin , $update);
-    //     $auth->addChild($admin , $insert);
-
-    //     $auth->addChild($user , $delete);
-    //     $auth->addChild($user , $update);
-    //     $auth->addChild($user , $insert);
-
-
-    //     $auth->assign($admin , 1);
-    //     $auth->assign($user , 2);
-
-
-    //     //Rule
-    //     $rule=new \frontend\component\AuthorRule();
-    //     $auth->add($rule);
-
-    //     $deleteOwnPost=$auth->createPermission('deleteOwnPost');
-    //     $deleteOwnPost->description = 'Update own post';
-    //     $deleteOwnPost->ruleName= $rule->name;
-    //     $auth->add($deleteOwnPost);
-
-    //     $auth->addChild($deleteOwnPost , $delete);
-        
-    //     $auth->addChild($user,$deleteOwnPost);
-
-    // }
 
 
 
