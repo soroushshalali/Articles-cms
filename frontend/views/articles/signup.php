@@ -1,4 +1,3 @@
-
 <?php
 
 /* @var $this yii\web\View */
@@ -32,6 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             <?php ActiveForm::end(); ?>
+            <?= yii\authclient\widgets\AuthChoice::widget([
+                'baseAuthUrl' => ['articles/auth'],
+                'popupMode' => false,
+            ]) ?>
         </div>
     </div>
 </div>

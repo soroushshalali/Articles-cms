@@ -13,27 +13,21 @@ use yii\data\Pagination;
 
 class ArticlesController extends \yii\web\Controller
 {
-    //  public function behaviors()
-    //  {
-    //      return [
-    //          'access' => [
-    //              'class' => AccessControl::className(),
-    //              'only' => ['insert' , 'delete' , 'update'],
-    //              'rules' => [
-    //                  [
-    //                      'actions' => ['insert', 'delete' , 'update'],
-    //                      'allow' => true,
-    //                      'roles' => ['user'],
-    //                  ],
-    //                  [
-    //                      'actions' => ['insert' , 'delete' , 'update'],
-    //                      'allow' => true,
-    //                      'roles' => ['admin'],
-    //                  ],
-    //              ],
-    //          ],
-    //      ];
-    //  }
+
+    public function actions()
+    {
+        return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
+        ];
+    }
+
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
+    }
 
 
     public function actionIndex()
