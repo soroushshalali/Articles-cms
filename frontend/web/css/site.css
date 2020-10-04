@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+
 }
 
 .wrap {
@@ -12,6 +13,7 @@ body {
 
 .wrap > .container {
     padding: 70px 15px 20px;
+
 }
 
 .footer {

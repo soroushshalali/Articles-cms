@@ -30,6 +30,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INSERTED = 2;
     const STATUS_BLOCKED = 3;
 
+    public $verification_token;
+
 
     /**
      * {@inheritdoc}

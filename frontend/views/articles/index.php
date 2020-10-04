@@ -1,4 +1,5 @@
 <?php
+
 use richardfan\widget\JSRegister;
 ?>
 <style>
@@ -11,23 +12,32 @@ use richardfan\widget\JSRegister;
         background-image: url("https://images.unsplash.com/photo-1488866022504-f2584929ca5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1343&q=80");
     }
 
+
     .main_header>h2 {
         font-size: 30px;
         text-shadow: 0 0 2px white;
     }
 
+    .foot {
+        background-image: url("https://images.unsplash.com/photo-1559890165-1ef92f415672?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=808&q=80");
+    }
+
+    .foot>h2 {
+        text-shadow: 0 0 2px white;
+    }
+
     .viewport {
         overflow: hidden;
-        margin-top: 50px;
+        margin-top: 0px;
         position: relative;
         height: 500px;
         display: flex;
         justify-content: space-between;
-        align-items:center;
+        align-items: center;
         padding: 0 10px;
     }
 
-    .viewport >button{
+    .viewport>button {
         border: none;
         height: 50px;
         width: 50px;
@@ -35,7 +45,7 @@ use richardfan\widget\JSRegister;
         background-color: white;
     }
 
-    .viewport > button:hover{
+    .viewport>button:hover {
         color: #0a73bb;
         transition: 0.4s;
     }
@@ -50,23 +60,23 @@ use richardfan\widget\JSRegister;
         padding: 10px 20px;
     }
 
-    .slide > article{
+    .slide>article {
         display: flex;
         flex-direction: column;
         height: 100%;
     }
 
-    .slide > article > h2{
+    .slide>article>h2 {
         font-size: 40px;
         color: #3b3b3b;
         font-weight: 600;
     }
 
-    .slide > article  p{
+    .slide>article p {
         font-size: 20px;
     }
 
-    .slide> a {
+    .slide>a {
         width: 100px;
         padding: 10px 0;
         border-radius: 4px;
@@ -82,7 +92,7 @@ use richardfan\widget\JSRegister;
         text-decoration: none;
     }
 
-    .slide> a:hover{
+    .slide>a:hover {
         background-color: #4444ba;
         transition: 0.4s;
     }
@@ -116,33 +126,39 @@ use richardfan\widget\JSRegister;
         width: 100px;
         align-self: flex-end;
     }
-
 </style>
 
 <header class="main_header">
     <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
 </header>
-    <section class="viewport">
-        <button class="back"> <i class="fas fa-chevron-left"></i></button>
-        <?php
-        $counter = 0;
-        foreach ($articles as $key => $article) :
-            $counter++;
-            ?>
-            <?= \frontend\widgets\ArticleWidget::widget(['counterr'=>$counter , 'article'=>$article])  ?>
 
-        <?php   endforeach;   ?>
 
-        <button class="next"> <i class="fas fa-chevron-right"></i></button>
-    </section>
+<?= \frontend\widgets\CounterShow::widget(['count' => $count])  ?>
+<section class="viewport">
+    <button class="back"> <i class="fas fa-chevron-left"></i></button>
+    <?php
+    $counter = 0;
+    foreach ($articles as $key => $article) :
+        $counter++;
+    ?>
+        <?= \frontend\widgets\ArticleWidget::widget(['counterr' => $counter, 'article' => $article])  ?>
+
+    <?php endforeach;   ?>
+
+    <button class="next"> <i class="fas fa-chevron-right"></i></button>
+</section>
+
+<header class="main_header foot">
+    <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
+</header>
 
 <?php JSRegister::begin(); ?>
 <script>
-    let count= document.getElementsByClassName('slide').length;
-    let counter=0;
+    let count = document.getElementsByClassName('slide').length;
+    let counter = 0;
     $(".next").on('click', function() {
         let activeSlide = $('.active');
-        if (counter < count-1) {
+        if (counter < count - 1) {
             counter++;
             activeSlide.next().removeClass('after').addClass('active');
             activeSlide.removeClass('active').addClass('before');

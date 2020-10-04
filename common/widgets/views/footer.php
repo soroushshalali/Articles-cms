@@ -1,13 +1,9 @@
-
 <style>
-
-
     .main_footer {
         background-color: #c4c4c4;
         box-shadow: 0 0 4px #bbbbbb;
         margin: 0 auto;
     }
-
     .main_footer>section {
         width: 60%;
         display: flex;
@@ -15,22 +11,17 @@
         align-items: center;
         justify-content: center;
     }
-
     .article_footer {
         width: 60%;
     }
-
     .sn_footer>ul {
         list-style-type: none;
         font-size: 40px;
     }
-
     .sn_footer > ul > li{
         display: inline-block;
     }
 </style>
-
-
 <footer class="main_footer">
     <section>
         <article class="article_footer">
@@ -48,5 +39,4 @@
             </ul>
         </div>
     </section>
-
 </footer>
