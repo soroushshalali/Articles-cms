@@ -1,29 +1,30 @@
-
 <style>
-    .main_articles{
+    .main_articles {
         display: flex;
         flex-direction: column;
     }
+    .pagination{
+        text-align: center;
+    }
 </style>
 
-<main class="main_articles" >
+<main class="main_articles">
 
 
-<?php
+    <?php
 
-foreach ($articles as $key => $article):
+    foreach ($articles as $key => $article) :
     ?>
-    <?= \common\widgets\ArticleShow::widget(['article' => $article ])  ?>
+        <?= \common\widgets\ArticleShow::widget(['article' => $article])  ?>
     <?php
     endforeach;
     ?>
-
-    <?php   
-    echo \yii\widgets\LinkPager::widget([
-        'pagination'=>$pagination,
-    ]);
-    ?>
+    <div class="pagination" >
+        <?php
+        echo \yii\widgets\LinkPager::widget([
+            'pagination' => $pagination,
+        ]);
+        ?>
+    </div>
 
     <main>
-
-

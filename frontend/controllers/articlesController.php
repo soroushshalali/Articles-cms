@@ -55,11 +55,11 @@ class ArticlesController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $count=Articles::find()->count();
+        $count = Articles::find()->count();
         $tenDays = time() - 864000;
         $condition = 'created_at > ' . $tenDays;
         $articles = Articles::find()->where($condition)->all();
-        return $this->render('index', ['articles' => $articles , 'count' => $count]);
+        return $this->render('index', ['articles' => $articles, 'count' => $count]);
     }
 
     public function actionArticle($id = null)
@@ -130,19 +130,18 @@ class ArticlesController extends \yii\web\Controller
         return $this->render('about');
     }
 
-    public function actionSearch($value = null)
+    public function actionSearch($id = null)
     {
 
-        if ($value != null) {
-            echo $value;
-            exit();
-            $value = 'lorem';
+
+        if ($id != null) {
+
             $art = new Articles();
-            $query = 'SELECT * FROM `articles` WHERE text like "%' . $value . '%"';
-            $result = $art::findBySql($query, [':text' => 'asd'])->all();
+            $query = "SELECT * FROM `articles` WHERE text like '%" . $id . "%'";
+            $result = $art::findBySql($query)->all();
             return $this->render('search_result', ['result' => $result]);
         } else {
-            echo 'value:(';
+            echo 'id:(';
             exit();
         }
     }
@@ -164,14 +163,13 @@ class ArticlesController extends \yii\web\Controller
     {
         if ($id !== null) {
             $model = Articles::findOne($id);
-            if ($model !== null) {
-                if ($model->delete()) {
-                    $this->redirect(['index']);
+            if ($model->author_id == Yii::$app->user->id) {
+                if ($model !== null) {
+                    if ($model->delete()) {
+                        $this->redirect(['index']);
+                    }
                 }
             }
-        } else {
-            echo 'sdfsdf';
-            exit();
         }
     }
 
@@ -197,7 +195,8 @@ class ArticlesController extends \yii\web\Controller
     public function actionProfile()
     {
         $user = User::findOne(Yii::$app->user->id);
-        return $this->render('profile', ['user' => $user]);
+        $articles = Articles::find()->where(['author_id' => Yii::$app->user->id])->all();
+        return $this->render('profile', ['user' => $user, 'articles' => $articles]);
     }
 
     public function actionInit()

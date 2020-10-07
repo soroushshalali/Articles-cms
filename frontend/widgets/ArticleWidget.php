@@ -8,8 +8,7 @@ use yii\base\Widget;
 
 class ArticleWidget extends Widget
 {
-    public $counterr;
-    public $article;
+    public $articles;
 
     public function init()
     {
@@ -18,7 +17,7 @@ class ArticleWidget extends Widget
 
     public function run()
     {
-        return $this->render('articleWidget' , ['counterr'=>$this->counterr , 'article'=>$this->article]);
+        return $this->render('articleWidget' , ['articles'=>$this->articles]);
     }
 
 }

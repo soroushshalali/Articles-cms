@@ -1,8 +1,5 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -15,36 +12,35 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous"> 
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&family=Bree+Serif&display=swap" rel="stylesheet">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <style>
+        *{
+            font-family: 'Asap', sans-serif;
+        }
+    </style>
     <?php $this->head() ?>
 </head>
-
 <body>
-    <?php $this->beginBody()
+<?php $this->beginBody() ?>
 
-    ?>
-    <?= \common\widgets\MyWidget::widget(['isGuest' => (int)Yii::$app->user->isGuest])  ?>
-    <?= \common\widgets\searchBar::widget()  ?>
+<div class="wrap">
 
-    <div class="container" style="min-height: 50vh;" >
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
+<?= \common\widgets\MyWidget::widget(['isGuest' => (int)Yii::$app->user->isGuest])  ?>
+<?= \common\widgets\searchBar::widget()  ?>
+    <div class="container">
         <?= $content ?>
     </div>
-    </div> -->
-    <?= \common\widgets\Footer::widget()  ?>
+</div>
+<?= \common\widgets\Footer::widget()  ?>
 
-    <?php $this->endBody() ?>
+<?php $this->endBody() ?>
 </body>
-
 </html>
 <?php $this->endPage() ?>

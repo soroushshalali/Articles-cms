@@ -76,4 +76,5 @@ return [
 
 
     'params' => $params,
+    'defaultRoute' => 'articles/index',
 ];
