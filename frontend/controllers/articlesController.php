@@ -56,8 +56,8 @@ class ArticlesController extends \yii\web\Controller
     public function actionIndex()
     {
         $count = Articles::find()->count();
-        $tenDays = time() - 864000;
-        $condition = 'created_at > ' . $tenDays;
+        $month = time() - 2592000;
+        $condition = 'created_at > ' . $month;
         $articles = Articles::find()->where($condition)->all();
         return $this->render('index', ['articles' => $articles, 'count' => $count]);
     }
@@ -148,6 +148,9 @@ class ArticlesController extends \yii\web\Controller
 
     public function actionInsert()
     {
+        if (Yii::$app->user->isGuest){
+            return $this->redirect(['login']);
+        }
         $user = User::findOne(Yii::$app->user->id);
         $model = new Articles();
         $model->author_id = Yii::$app->user->id;
@@ -155,7 +158,6 @@ class ArticlesController extends \yii\web\Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
-
         return $this->render('insert', ['model' => $model]);
     }
 
@@ -169,6 +171,8 @@ class ArticlesController extends \yii\web\Controller
                         $this->redirect(['index']);
                     }
                 }
+            }else{
+                throw new \yii\web\HttpException(405, 'Method Not Allowed');
             }
         }
     }
@@ -177,8 +181,6 @@ class ArticlesController extends \yii\web\Controller
     {
         if (isset($id)) {
             $model = Articles::findOne($id);
-        } else {
-            echo 'id:(';
         }
 
         if ($model->author_id == Yii::$app->user->id) {
@@ -187,13 +189,15 @@ class ArticlesController extends \yii\web\Controller
             }
             return $this->render('update', ['model' => $model]);
         } else {
-            echo 'NO';
-            exit();
+            throw new \yii\web\HttpException(405, 'Method Not Allowed');
         }
     }
 
     public function actionProfile()
     {
+        if (Yii::$app->user->isGuest){
+            return $this->redirect(['login']);
+        }
         $user = User::findOne(Yii::$app->user->id);
         $articles = Articles::find()->where(['author_id' => Yii::$app->user->id])->all();
         return $this->render('profile', ['user' => $user, 'articles' => $articles]);
@@ -242,5 +246,14 @@ class ArticlesController extends \yii\web\Controller
         $auth->addChild($updateOwnArticle, $updateArticle);
 
         $auth->addChild($author, $updateOwnArticle);
+    }
+
+    public function errs(
+        
+    )
+    {
+        if (Yii::$app->user->isGuest){
+            return $this->redirect(['login']);
+        }
     }
 }
